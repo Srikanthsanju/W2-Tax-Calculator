@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import fitz  # PyMuPDF
 import re
 import pdfplumber
 import io
@@ -24,10 +23,6 @@ def extract_w2_data(pdf_bytes):
             for page in pdf.pages:
                 full_text += page.extract_text()
                 
-        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-        page = doc[0]
-        full_text = page.get_text()
-        doc.close()
         
         # Extract all numbers in order
         all_numbers = []
@@ -181,3 +176,4 @@ if __name__ == '__main__':
     print("="*60 + "\n")
 
     app.run(debug=True, port=5000)
+
